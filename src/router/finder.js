@@ -51,12 +51,14 @@ function RouterFinder({ routes, currentUrl, routerOptions, convert }) {
         redirectTo = RouterRedirect(route, redirectTo).path();
 
         if (currentRoute.name !== routePath) {
+          let testprops = route.testprops
           currentRoute = setCurrentRoute({
             route,
             routePath,
             routeLanguage: routerPath.routeLanguage(),
             urlParser,
             namedPath: routerPath.namedPath(),
+            testprops
           });
         }
 
@@ -116,7 +118,7 @@ function RouterFinder({ routes, currentUrl, routerOptions, convert }) {
     }
   }
 
-  function setCurrentRoute({ route, routePath, routeLanguage, urlParser, namedPath }) {
+  function setCurrentRoute({ route, routePath, routeLanguage, urlParser, namedPath, testprops }) {
     const routerRoute = RouterRoute({
       routeInfo: route,
       urlParser,
@@ -124,6 +126,7 @@ function RouterFinder({ routes, currentUrl, routerOptions, convert }) {
       routeNamedParams,
       namedPath,
       language: routeLanguage || defaultLanguage,
+      testprops,
     });
     routeNamedParams = routerRoute.namedParams();
 

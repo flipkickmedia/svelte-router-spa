@@ -1,9 +1,5 @@
 # Svelte Router SPA
 
-![version](https://img.shields.io/npm/v/svelte-router-spa.svg)
-![license](https://img.shields.io/github/license/jorgegorka/svelte-router.svg)
-![Code climate](https://img.shields.io/codeclimate/maintainability/jorgegorka/svelte-router.svg)
-
 ## What is Svelte Router SPA
 
 Svelte Router adds routing to your Svelte apps. It keeps your routes organized in a single place.
@@ -12,31 +8,39 @@ With Svelte Router SPA you have all the features you need to create modern web a
 
 It's designed for Single Page Applications (SPA). If you need Server Side Rendering then consider using [Svelte Kit](https://kit.svelte.dev/).
 
-## -- Svelte Router SPA is feature complete. No new features will be added, only bugfixes will be solved --.
-
 ## Index
 
-* [Features](#features)
-* [Install](#install)
-* [Usage](#usage)
-  * [Layouts and route info](#layouts-and-route-info)
-  * [Anatomy of a route](#anatomy-of-a-route)
-  * [Using named params as first part of path name (not recommended)](#using-named-params-as-first-part-of-path-name-not-recommended)
-* [Route prefix](#route-prefix)
-* [Localisation](#localisation)
-  * [Rendering a page in different languages](#rendering-a-page-in-different-languages)
-* [Google Analytics](#google-analytics)
-* [Not Found - 404](#not-found---404)
-* [API](#api)
-  * [Router](#router)
-  * [Route](#route)
-  * [currentRoute](#currentroute)
-  * [Navigate](#navigate)
-  * [navigateTo](#navigateto)
-  * [routeIsActive](#routeisactive)
-  * [localisedRoute](#localisedroute)
-* [Example of use](#example-of-use)
-* [Credits](#credits)
+- [Svelte Router SPA](#svelte-router-spa)
+  - [What is Svelte Router SPA](#what-is-svelte-router-spa)
+  - [Index](#index)
+  - [Features](#features)
+  - [Install](#install)
+  - [Usage](#usage)
+    - [Layouts and route info](#layouts-and-route-info)
+    - [Anatomy of a route](#anatomy-of-a-route)
+    - [Using named params as first part of path name (not recommended)](#using-named-params-as-first-part-of-path-name-not-recommended)
+  - [API](#api)
+    - [Router](#router)
+    - [Route](#route)
+    - [currentRoute](#currentroute)
+    - [Navigate](#navigate)
+      - [params](#params)
+    - [navigateTo](#navigateto)
+      - [params](#params-1)
+    - [routeIsActive](#routeisactive)
+      - [Params](#params-2)
+    - [localisedRoute](#localisedroute)
+      - [params](#params-3)
+    - [Not Found - 404](#not-found---404)
+      - [Default behaviour](#default-behaviour)
+      - [Custom behaviour](#custom-behaviour)
+  - [Route prefix](#route-prefix)
+  - [Google Analytics](#google-analytics)
+  - [Localisation](#localisation)
+    - [Rendering a page in different languages](#rendering-a-page-in-different-languages)
+    - [Example of use](#example-of-use)
+  - [Credits](#credits)
+    - [Contributors](#contributors)
 
 ## Features
 
@@ -70,6 +74,12 @@ with Yarn
 yarn add svelte-router-spa
 ```
 
+with pnpm
+
+```bash
+pnpm add -D svelte-router-spa
+```
+
 ## Usage
 
 Ensure your local server is configured in SPA mode. In a default Svelte installation you need to edit your package.json and add _-s_ to `sirv public`.
@@ -83,12 +93,12 @@ Instead of having your routes spread inside your code Svelte Router SPA lets you
 Add a routes.js file with your routes info. Example:
 
 ```javascript
-import Login from './views/public/login.svelte'
-import PublicIndex from './views/public/index.svelte'
-import PublicLayout from './views/public/layout.svelte'
-import AdminLayout from './views/admin/layout.svelte'
-import AdminIndex from './views/admin/index.svelte'
-import EmployeesIndex from './views/admin/employees/index.svelte'
+import Login from './views/public/login.svelte';
+import PublicIndex from './views/public/index.svelte';
+import PublicLayout from './views/public/layout.svelte';
+import AdminLayout from './views/admin/layout.svelte';
+import AdminIndex from './views/admin/index.svelte';
+import EmployeesIndex from './views/admin/employees/index.svelte';
 
 function userIsAdmin() {
   //check if user is admin and returns true or false
@@ -116,9 +126,9 @@ const routes = [
       },
     ],
   },
-]
+];
 
-export { routes }
+export { routes };
 ```
 
 Import the routes into your main component (probably App.svelte)
@@ -258,7 +268,7 @@ const routes = [
       },
     ],
   },
-]
+];
 ```
 
 The routes that this file will parse successfully are:
@@ -412,7 +422,7 @@ const routes = [
       },
     ],
   },
-]
+];
 ```
 
 That configuration will parse correctly the following routes:
@@ -501,9 +511,9 @@ When a language is provided _navigateTo_ will try to convert the _route name_ to
 ```
 
 ```javascript
-navigateTo('setup') // Will redirect to /setup
+navigateTo('setup'); // Will redirect to /setup
 
-navigateTo('setup', 'es') // Will redirect to /configuracion
+navigateTo('setup', 'es'); // Will redirect to /configuracion
 ```
 
 ### routeIsActive
@@ -566,9 +576,9 @@ localisedRoute returns a string with the route localised to the specified langua
 ```
 
 ```javascript
-localisedRoute('setup', 'es') // Will return the string "/configuracion"
+localisedRoute('setup', 'es'); // Will return the string "/configuracion"
 
-localisedRoute('setup', 'it') // Will return the string "/configurazione"
+localisedRoute('setup', 'it'); // Will return the string "/configurazione"
 ```
 
 ### Not Found - 404
@@ -636,6 +646,10 @@ const routes = [
   {
     name: 'admin',
     component: AdminIndex,
+    componentProps: {
+      firstProp: 'Admin',
+      secondProp: 'Something',
+    },
     lang: { es: 'administrador' },
     nestedRoutes: [
       {
@@ -663,7 +677,7 @@ const routes = [
       },
     ],
   },
-]
+];
 ```
 
 If we don't specify a language the following routes are valid:
@@ -740,9 +754,9 @@ Example:
 ```
 
 ```javascript
-navigateTo('setup') // Will redirect to /setup
+navigateTo('setup'); // Will redirect to /setup
 
-navigateTo('setup', 'es') // Will redirect to /configuracion
+navigateTo('setup', 'es'); // Will redirect to /configuracion
 ```
 
 There is also available a function called _localisedRoute_ that will return a string with the translated route, in case you want the translation but not navigating to the route.
@@ -751,7 +765,7 @@ The router options accept a property called _defaultLanguage_ This value will be
 
 ### Example of use
 
-[Demanda](https://github.com/jorgegorka/demanda) is an open source e-commerce application made with Ruby on Rails for the backend and Svelte for the frontend.  It is a [very good example](https://github.com/jorgegorka/demanda/tree/master/frontend/src/lib/routes) of how to use Svelte Router SPA.
+[Demanda](https://github.com/jorgegorka/demanda) is an open source e-commerce application made with Ruby on Rails for the backend and Svelte for the frontend. It is a [very good example](https://github.com/jorgegorka/demanda/tree/master/frontend/src/lib/routes) of how to use Svelte Router SPA.
 
 ## Credits
 
