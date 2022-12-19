@@ -120,7 +120,7 @@ function RouterFinder({ routes, currentUrl, routerOptions, convert }) {
     }
   }
 
-  function setCurrentRoute({ route, routePath, routeLanguage, urlParser, namedPath, props }) {
+  function setCurrentRoute({ route, routePath, routeLanguage, urlParser, namedPath, componentProps, layoutProps }) {
     const routerRoute = RouterRoute({
       routeInfo: route,
       urlParser,
