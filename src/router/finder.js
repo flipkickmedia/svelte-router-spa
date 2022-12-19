@@ -128,7 +128,8 @@ function RouterFinder({ routes, currentUrl, routerOptions, convert }) {
       routeNamedParams,
       namedPath,
       language: routeLanguage || defaultLanguage,
-      props,
+      componentProps,
+      layoutProps,
     });
     routeNamedParams = routerRoute.namedParams();
 

@@ -3,7 +3,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import sveltePreprocess from 'svelte-preprocess';
 import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
-import pkg from './package.json';
+const pkg = require('./package.json');;
 
 let isDev = false;
 if (process.env.ROLLUP_WATCH) {
