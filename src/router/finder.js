@@ -43,7 +43,7 @@ function RouterFinder({ routes, currentUrl, routerOptions, convert }) {
     const routerPath = RouterPath({ basePath, basePathName, pathNames, convert, currentLanguage });
     staticParamMatch = false;
 
-    routes.forEach(function(route) {
+    routes.forEach(function (route) {
       routerPath.updatedPath(route);
 
       if (matchRoute(routerPath, route.name)) {
@@ -51,14 +51,16 @@ function RouterFinder({ routes, currentUrl, routerOptions, convert }) {
         redirectTo = RouterRedirect(route, redirectTo).path();
 
         if (currentRoute.name !== routePath) {
-          let testprops = route.testprops
+          let componentProps = route.componentProps;
+          let layoutProps = route.layoutProps;
           currentRoute = setCurrentRoute({
             route,
             routePath,
             routeLanguage: routerPath.routeLanguage(),
             urlParser,
             namedPath: routerPath.namedPath(),
-            testprops
+            componentProps,
+            layoutProps,
           });
         }
 
@@ -110,7 +112,7 @@ function RouterFinder({ routes, currentUrl, routerOptions, convert }) {
 
   function parseCurrentUrl(currentUrl, sitePrefix) {
     if (sitePrefix && sitePrefix.trim().length > 0) {
-      const replacePattern = currentUrl.endsWith(sitePrefix) ? sitePrefix : sitePrefix + "/";
+      const replacePattern = currentUrl.endsWith(sitePrefix) ? sitePrefix : sitePrefix + '/';
       const noPrefixUrl = currentUrl.replace(replacePattern, '');
       return UrlParser(noPrefixUrl);
     } else {
@@ -118,7 +120,7 @@ function RouterFinder({ routes, currentUrl, routerOptions, convert }) {
     }
   }
 
-  function setCurrentRoute({ route, routePath, routeLanguage, urlParser, namedPath, testprops }) {
+  function setCurrentRoute({ route, routePath, routeLanguage, urlParser, namedPath, props }) {
     const routerRoute = RouterRoute({
       routeInfo: route,
       urlParser,
@@ -126,7 +128,7 @@ function RouterFinder({ routes, currentUrl, routerOptions, convert }) {
       routeNamedParams,
       namedPath,
       language: routeLanguage || defaultLanguage,
-      testprops,
+      props,
     });
     routeNamedParams = routerRoute.namedParams();
 
