@@ -49,6 +49,7 @@
   },
   "homepage": "https://github.com/flipkickmedia/svelte-router-spa/blob/master/README.md",
   "keywords": [
+    "entitywind",
     "svelte",
     "router",
     "spa"
